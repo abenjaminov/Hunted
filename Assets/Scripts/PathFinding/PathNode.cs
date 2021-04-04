@@ -1,9 +1,12 @@
 ﻿using Grid;
+using UnityEngine.Events;
 
 namespace PathFinding
 {
-    public class PathNode
+    public class PathNode : IGrid2DObject
     {
+        public event UnityAction<IGrid2DObject> OnObjectChanged;
+        
         private Grid2D<PathNode> _grid;
         public int x;
         public int y;
@@ -27,6 +30,12 @@ namespace PathFinding
         public void CalculateFCost()
         {
             FCost = GCost + HCost;
+        }
+
+        public void SetIsWalkable(bool isWalkable)
+        {
+            this.IsWalkable = isWalkable;
+            this.OnObjectChanged?.Invoke(this);
         }
     }
 }

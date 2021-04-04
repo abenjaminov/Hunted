@@ -124,7 +124,7 @@ namespace PathFinding
             if(currentNode.y + 1 < Grid.Height)
                 neighbourList.Add(Grid.GetGridObjectAt(currentNode.x, currentNode.y + 1));
 
-            return neighbourList.MixRandomly().ToList();
+            return neighbourList;//.MixRandomly().ToList();
         }
 
         private List<PathNode> CalculatePath(PathNode endNode)

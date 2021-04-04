@@ -5,7 +5,7 @@ using Utils;
 
 namespace Grid
 {
-    public class Grid2D<T> where T : class
+    public class Grid2D<T> where T : class, IGrid2DObject
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -38,8 +38,14 @@ namespace Grid
                 for (int j = 0; j < Width; j++)
                 {
                     _grid[i, j] = createGridObject(this, j, i);
+                    _grid[i,j].OnObjectChanged += OnOnObjectChanged;
                 }
             }
+        }
+
+        private void OnOnObjectChanged(IGrid2DObject changedGridObject)
+        {
+            _visuals?.VisualizeGrid(this);
         }
 
         public void SetVisuals(IGridVisuals<T> visuals)

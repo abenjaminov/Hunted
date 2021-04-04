@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Linq;
+using Game.ScriptableObjects;
 using PathFinding;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Grid
 {
     public class GridTest : MonoBehaviour, IGridVisuals<PathNode>
     {
-        private PathFinding.PathFindingHelper pathFinding;
+        public PathFindingData pathFindingData;
+        
         private void Start()
         {
-            var enemyGridPosition = new Vector2(-20, -15);
-
-            pathFinding = new PathFinding.PathFindingHelper(60, 80, enemyGridPosition, .5f);
-            pathFinding.Grid.SetVisuals(this);
+            pathFindingData.SetVisuals(this);
         }
 
         private void Update()
@@ -21,23 +21,8 @@ namespace Grid
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                print(mouseWorldPosition);
-                var xyPosition = pathFinding.Grid.WorldPositionToGridXY(mouseWorldPosition);
-                var path = pathFinding.FindPath(0, 0, xyPosition.x, xyPosition.y);
-                
-                if (path != null)
-                {
-                    for (int i = 0; i < path.Count - 1; i++)
-                    {
-                        var node = path[i];
-                        var nextNode = path[i + 1];
-
-                        var firstNodeWorldPosition = pathFinding.Grid.GetWorldPosition(node.x, node.y);
-                        var secondNodeWorldPosition = pathFinding.Grid.GetWorldPosition(nextNode.x, nextNode.y);
-
-                        Debug.DrawLine(firstNodeWorldPosition, secondNodeWorldPosition, Color.red, 50f);
-                    }
-                }
+                var xyPosition = pathFindingData.WorldPositionToGridXY(mouseWorldPosition);
+                Debug.Log("Mouse position on Grid : " + xyPosition);
             }
         }
 
@@ -56,11 +41,29 @@ namespace Grid
                     gridToDraw.GetWorldPosition(gridToDraw.Width, i),
                     Color.white,100f);
             }
+
+            for (int i = 0; i < gridToDraw.Width; i++)
+            {
+                for (int j = 0; j < gridToDraw.Height; j++)
+                {
+                    var node = gridToDraw.GetGridObjectAt(i, j);
+                    if (!node.IsWalkable)
+                    {
+                        var cellSizeHeight = new Vector3(0, gridToDraw.CellSize);
+                        var cellSizeWidth = new Vector3(gridToDraw.CellSize, 0);
+                        var worldPosition = gridToDraw.GetWorldPosition(i, j);
+                        Debug.DrawLine(worldPosition, worldPosition + cellSizeHeight + cellSizeWidth, Color.blue, 100f);
+                        Debug.DrawLine(worldPosition + cellSizeHeight + cellSizeWidth, worldPosition + cellSizeWidth, Color.blue, 100f);
+                        Debug.DrawLine(worldPosition + cellSizeWidth, worldPosition + cellSizeHeight, Color.blue, 100f);
+                        Debug.DrawLine(worldPosition + cellSizeWidth, worldPosition, Color.blue, 100f);
+                    }
+                }
+            }
         }
 
         public void VisualizeGrid(Grid2D<PathNode> grid)
         {
-            //DrawGrid(grid);
+            DrawGrid(grid);
         }
     }
 }

@@ -17,7 +17,9 @@ namespace Snake
         private void MoveEvent(Vector2 input)
         {
             this._snakeBodyPartMovement.Move(input);
-            this.MovementDirection = this._snakeBodyPartMovement.MovementDirection;
+            this.MovementDirection = _snakeBodyPartMovement.MovementDirection;
+            
+            this._movementChannel.OnMovementDirectionChanged(this.MovementDirection);
         }
 
         public override void EnemyCollided(Enemy enemy)
