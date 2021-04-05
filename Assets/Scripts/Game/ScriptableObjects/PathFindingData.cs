@@ -49,9 +49,7 @@ namespace Game.ScriptableObjects
                 {
                     var gridPosition = _pathFinding.Grid.WorldPositionToGridXY(worldPosition + new Vector3(xProgress, yProgress,0));
                     var currentNode = _pathFinding.Grid.GetGridObjectAt(gridPosition.x, gridPosition.y);
-                    Debug.Log("(" + currentNode.x + ", " + currentNode.y + ")");
                     currentNode.SetIsWalkable(false);
-
                     yIndex++;
                     yProgress = yIndex * CellSize;
                 }

@@ -46,39 +46,58 @@ namespace Game.Enemies
                 CreatePath();
             }
 
-            if (_movementPositions.Count <= 0) return;
+            if (_movementPositions.Count <= 0 || nextPositionIndex < 0) return;
 
             var nextPosition = _movementPositions[nextPositionIndex];
 
-            var movementDirection = (nextPosition.To3D() - transform.position ).normalized;
-
-            transform.Translate(movementDirection * (_speed * Time.deltaTime));
+            transform.position =
+                Vector3.MoveTowards(transform.position, nextPosition, _speed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, nextPosition) < 0.1f)
             {
-                nextPositionIndex--;
-
-                if (nextPositionIndex <= 3)
-                {
-                    _timeUntillNextPulse = timeBetweenPulses;   
-                    CreatePath();
-                }
+                this.AdvanceNextPosition();
             }
         }
 
         private void CreatePath()
         {
             var followPosition = _objectToFollow.transform.position;
-            
-            _movementPositions = pathFindingData.FindPath(transform.position,followPosition);
 
+            _movementPositions = pathFindingData.FindPath(transform.position,followPosition);
             _movementPositions.Insert(0,followPosition.To2D());
-            nextPositionIndex = _movementPositions.Count - 1;
+            
+            SetupNextPosition();
         }
 
+        private void SetupNextPosition()
+        {
+            nextPositionIndex = _movementPositions.Count - 1;
+
+            var currentEnemyGridPosition =
+                pathFindingData.WorldPositionToGridXY(transform.position);
+
+            var nextPositionOnGrid =
+                pathFindingData.WorldPositionToGridXY(_movementPositions[nextPositionIndex]);
+
+            if (currentEnemyGridPosition == nextPositionOnGrid)
+            {
+                this.AdvanceNextPosition();
+            }
+        }
+
+        private void AdvanceNextPosition()
+        {
+            nextPositionIndex--;
+        }
+        
         public void FollowObject(GameObject objectToFollow)
         {
             _objectToFollow = objectToFollow;
+        }
+
+        private void OnDestroy()
+        {
+            _movementChannel.movementDirectionEvent -= MovementDirectionEvent;
         }
     }
 }

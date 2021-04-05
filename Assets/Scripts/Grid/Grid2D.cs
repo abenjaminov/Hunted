@@ -62,7 +62,7 @@ namespace Grid
 
         public Vector3 GetWorldPosition(int x, int y)
         {
-            return new Vector3(Position.x + (x * CellSize), Position.y + (y * CellSize));
+            return new Vector3(Position.x + (x * CellSize), Position.y + (y * CellSize)) + (Vector3.one * (CellSize / 2));
         }
 
         public Vector2Int WorldPositionToGridXY(Vector2 worldPosition)

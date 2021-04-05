@@ -139,5 +139,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementChannel: {fileID: 11400000, guid: 6bfe73abe61918742a8bae28bf78616a, type: 2}
   pathFindingData: {fileID: 11400000, guid: 210e9c93f6cb5ca4ca241b3f7f1f561a, type: 2}
-  timeBetweenPulses: 5
+  timeBetweenPulses: 1
   _speed: 3.5

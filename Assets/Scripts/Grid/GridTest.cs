@@ -4,6 +4,7 @@ using Game.ScriptableObjects;
 using PathFinding;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Utils;
 
 namespace Grid
 {
@@ -28,17 +29,19 @@ namespace Grid
 
         private void DrawGrid(Grid2D<PathNode> gridToDraw)
         {
+            var halfCellSize = Vector2.one.To3D() * (gridToDraw.CellSize / 2);
+            
             for (int i = 0; i <= gridToDraw.Width; i++)
             {
-                Debug.DrawLine(gridToDraw.GetWorldPosition(i, 0), 
-                    gridToDraw.GetWorldPosition(i, gridToDraw.Height),
+                Debug.DrawLine(gridToDraw.GetWorldPosition(i, 0) - halfCellSize, 
+                    gridToDraw.GetWorldPosition(i, gridToDraw.Height) - halfCellSize,
                     Color.white,100f);
             }
 
             for (int i = 0; i <= gridToDraw.Height; i++)
             {
-                Debug.DrawLine(gridToDraw.GetWorldPosition(0, i), 
-                    gridToDraw.GetWorldPosition(gridToDraw.Width, i),
+                Debug.DrawLine(gridToDraw.GetWorldPosition(0, i) - halfCellSize, 
+                    gridToDraw.GetWorldPosition(gridToDraw.Width, i) - halfCellSize,
                     Color.white,100f);
             }
 
@@ -52,10 +55,11 @@ namespace Grid
                         var cellSizeHeight = new Vector3(0, gridToDraw.CellSize);
                         var cellSizeWidth = new Vector3(gridToDraw.CellSize, 0);
                         var worldPosition = gridToDraw.GetWorldPosition(i, j);
-                        Debug.DrawLine(worldPosition, worldPosition + cellSizeHeight + cellSizeWidth, Color.blue, 100f);
-                        Debug.DrawLine(worldPosition + cellSizeHeight + cellSizeWidth, worldPosition + cellSizeWidth, Color.blue, 100f);
-                        Debug.DrawLine(worldPosition + cellSizeWidth, worldPosition + cellSizeHeight, Color.blue, 100f);
-                        Debug.DrawLine(worldPosition + cellSizeWidth, worldPosition, Color.blue, 100f);
+                        Debug.Log("(" + i + ", " + j + ")");
+                        Debug.DrawLine(worldPosition - halfCellSize, worldPosition + cellSizeHeight + cellSizeWidth - halfCellSize, Color.blue, 100f);
+                        Debug.DrawLine(worldPosition + cellSizeHeight + cellSizeWidth - halfCellSize, worldPosition + cellSizeWidth - halfCellSize, Color.blue, 100f);
+                        Debug.DrawLine(worldPosition + cellSizeWidth - halfCellSize, worldPosition + cellSizeHeight - halfCellSize, Color.blue, 100f);
+                        Debug.DrawLine(worldPosition + cellSizeWidth - halfCellSize, worldPosition - halfCellSize, Color.blue, 100f);
                     }
                 }
             }
