@@ -34,18 +34,20 @@ namespace Game.ScriptableObjects
             _pathFinding.Grid.SetVisuals(gridVisuals);
         }
         
-        public void SetNonWalkableArea(Vector3 worldPosition, float width, float height)
+        public void SetNonWalkableArea(Vector3 centerWorldPosition, float width, float height)
         {
             var xIndex = 0;
             int yIndex;
             var xProgress = xIndex * CellSize;
             float yProgress;
 
-            while (xProgress < width + CellSize)
+            var worldPosition = centerWorldPosition - new Vector3(width / 2, height / 2);
+
+            while (xProgress <= width + CellSize)
             {
                 yIndex = 0;
                 yProgress = yIndex * CellSize;
-                while (yProgress < height + CellSize)
+                while (yProgress <= height + CellSize)
                 {
                     var gridPosition = _pathFinding.Grid.WorldPositionToGridXY(worldPosition + new Vector3(xProgress, yProgress,0));
                     var currentNode = _pathFinding.Grid.GetGridObjectAt(gridPosition.x, gridPosition.y);

@@ -46,9 +46,10 @@ namespace Game.Enemies
                 CreatePath();
             }
 
-            if (_movementPositions.Count <= 0 || nextPositionIndex < 0) return;
+            if (_movementPositions.Count <= 0) return;
 
-            var nextPosition = _movementPositions[nextPositionIndex];
+            var nextPosition = nextPositionIndex <= 0 ?
+                GetFinalFollowPosition() : _movementPositions[nextPositionIndex];
 
             transform.position =
                 Vector3.MoveTowards(transform.position, nextPosition, _speed * Time.deltaTime);
@@ -61,12 +62,18 @@ namespace Game.Enemies
 
         private void CreatePath()
         {
-            var followPosition = _objectToFollow.transform.position;
+            var followPosition = GetFinalFollowPosition();
 
             _movementPositions = pathFindingData.FindPath(transform.position,followPosition);
-            _movementPositions.Insert(0,followPosition.To2D());
-            
+
             SetupNextPosition();
+        }
+
+        private Vector2 GetFinalFollowPosition()
+        {
+            var followPosition = _objectToFollow.transform.position;
+
+            return followPosition.To2D();
         }
 
         private void SetupNextPosition()
@@ -87,6 +94,8 @@ namespace Game.Enemies
 
         private void AdvanceNextPosition()
         {
+            if (nextPositionIndex == 0) return;
+            
             nextPositionIndex--;
         }
         

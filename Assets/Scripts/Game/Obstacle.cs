@@ -13,7 +13,7 @@ namespace Game
         {
             _renderer = GetComponent<SpriteRenderer>();
             var bounds = _renderer.bounds;
-            _pathFindingData.SetNonWalkableArea(transform.position - new Vector3(bounds.size.x / 2, bounds.size.y / 2), bounds.size.x, bounds.size.y);        
+            _pathFindingData.SetNonWalkableArea(bounds.center, bounds.size.x, bounds.size.y);        
         }
     }
 }

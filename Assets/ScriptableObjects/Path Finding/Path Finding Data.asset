@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9078dd3416a84cf8b6416ae5de99d204, type: 3}
   m_Name: Path Finding Data
   m_EditorClassIdentifier: 
-  Width: 40
-  Height: 30
+  Width: 80
+  Height: 60
   Position: {x: -20, y: -15}
-  CellSize: 1
+  CellSize: 0.5
