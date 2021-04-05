@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Channels;
 using Game.ScriptableObjects;
+using Game.ScriptableObjects.GameLogic;
 using UnityEngine;
 using Utils;
 
@@ -46,7 +47,8 @@ namespace Game.Enemies
                 CreatePath();
             }
 
-            if (_movementPositions.Count <= 0) return;
+            if (_movementPositions.Count <= 0 || 
+                nextPositionIndex < 0 || nextPositionIndex >= _movementPositions.Count) return;
 
             var nextPosition = nextPositionIndex <= 0 ?
                 GetFinalFollowPosition() : _movementPositions[nextPositionIndex];
@@ -79,6 +81,8 @@ namespace Game.Enemies
         private void SetupNextPosition()
         {
             nextPositionIndex = _movementPositions.Count - 1;
+
+            if (nextPositionIndex < 0) return;
 
             var currentEnemyGridPosition =
                 pathFindingData.WorldPositionToGridXY(transform.position);

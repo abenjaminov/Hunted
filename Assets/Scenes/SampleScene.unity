@@ -262,7 +262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93275962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.26, y: 0.35, z: 0}
+  m_LocalPosition: {x: -6.96, y: -0.78, z: 0}
   m_LocalScale: {x: 1.3954782, y: 5.88, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &520976911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,8 +486,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 3215664579985873679, guid: d4484596b30fddc4c9a3828a95b424da, type: 3}
   _spawnLocations:
+  - {fileID: 780038200}
+  - {fileID: 1770377834}
   - {fileID: 1832235315}
-  _timeBetweenSpawns: 500
+  - {fileID: 837003076}
+  - {fileID: 925310012}
+  - {fileID: 234219136}
+  - {fileID: 222599798}
+  - {fileID: 1993369972}
+  _timeBetweenSpawns: 5
 --- !u!4 &520976912
 Transform:
   m_ObjectHideFlags: 0
@@ -991,7 +998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1576855769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1056,6 +1063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7ea9dd1acf1df40ae5e6e58a1722b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pathFindingData: {fileID: 11400000, guid: 210e9c93f6cb5ca4ca241b3f7f1f561a, type: 2}
   _powerUpPrefabs:
   - {fileID: 341903973668170503, guid: 1f4264768ddc379458ef1ad05955f22b, type: 3}
   _gameChannel: {fileID: 11400000, guid: 9edcffa9f9b7b3c4a83a5e7bb9328396, type: 2}

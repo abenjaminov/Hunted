@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Game.ScriptableObjects;
+using Game.ScriptableObjects.GameLogic;
 using PathFinding;
 using UnityEngine;
 using UnityEngine.Serialization;

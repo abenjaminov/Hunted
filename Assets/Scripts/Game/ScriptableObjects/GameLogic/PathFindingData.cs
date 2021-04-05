@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using Grid;
 using PathFinding;
 using UnityEngine;
 
-namespace Game.ScriptableObjects
+namespace Game.ScriptableObjects.GameLogic
 {
     [CreateAssetMenu(fileName = "Path Finding Data", menuName = "Game Logic/Path Finding Data", order = 0)]
     public class PathFindingData : ScriptableObject
@@ -17,13 +15,6 @@ namespace Game.ScriptableObjects
         [SerializeField] private Vector2 Position;
         [SerializeField] private float CellSize;
 
-        private static int count;
-
-        public float GetCellSize()
-        {
-            return this.CellSize;
-        }
-        
         private void OnEnable()
         {
             _pathFinding = new PathFindingHelper(Height, Width, Position, CellSize);
@@ -89,6 +80,14 @@ namespace Game.ScriptableObjects
         public Vector2 WorldPositionToGridXY(Vector3 worldPosition)
         {
             return _pathFinding.Grid.WorldPositionToGridXY(worldPosition);
+        }
+
+        public bool IsWalkable(Vector3 worldPosition)
+        {
+            var gridPosition = _pathFinding.Grid.WorldPositionToGridXY(worldPosition);
+            var gridObject = _pathFinding.Grid.GetGridObjectAt(gridPosition.x, gridPosition.y);
+
+            return gridObject.IsWalkable;
         }
     }
 }

@@ -1,4 +1,5 @@
 using Game.ScriptableObjects;
+using Game.ScriptableObjects.GameLogic;
 using UnityEngine;
 
 namespace Game
