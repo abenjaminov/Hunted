@@ -9,6 +9,7 @@ namespace Channels
     {
         public UnityAction<Level> levelCompleteEvent;
         public UnityAction<LevelObjective> levelObjectiveComplete;
+        public UnityAction<Level, Level> levelChangedEvent;
 
         public void OnLevelCompleted(Level level)
         {
@@ -18,6 +19,11 @@ namespace Channels
         public void OnLevelObjectiveCompleted(LevelObjective levelObject)
         {
             levelObjectiveComplete?.Invoke(levelObject);
+        }
+
+        public void OnLevelChanged(Level oldLevel, Level newLevel)
+        {
+            levelChangedEvent?.Invoke(oldLevel, newLevel);
         }
     }
 }

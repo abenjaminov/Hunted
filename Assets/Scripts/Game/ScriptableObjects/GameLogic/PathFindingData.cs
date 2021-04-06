@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Grid;
 using PathFinding;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Game.ScriptableObjects.GameLogic
@@ -10,19 +11,28 @@ namespace Game.ScriptableObjects.GameLogic
     {
         private PathFindingHelper _pathFinding;
 
-        [SerializeField] private int Width;
-        [SerializeField] private int Height;
-        [SerializeField] private Vector2 Position;
+        [HideInInspector] public int Width;
+        [HideInInspector] public int Height;
+        [HideInInspector]  private Vector2 Position;
+        
         [SerializeField] private float CellSize;
+        private IGridVisuals<PathNode> _gridVisuals;
 
-        private void OnEnable()
+        public void InitializePathFinding(int Width, int Height)
         {
-            _pathFinding = new PathFindingHelper(Height, Width, Position, CellSize);
-        }
+            Position = new Vector2((float)-Width / 2 , (float)-Height / 2);
+            
+            _pathFinding = new PathFindingHelper((int) (Height / CellSize), (int) (Width / CellSize), Position, CellSize);
 
+            if (_gridVisuals != null)
+            {
+                _pathFinding.Grid.SetVisuals(_gridVisuals);
+            }
+        }
+        
         public void SetVisuals(IGridVisuals<PathNode> gridVisuals)
         {
-            _pathFinding.Grid.SetVisuals(gridVisuals);
+            _gridVisuals = gridVisuals;
         }
         
         public void SetNonWalkableArea(Vector3 centerWorldPosition, float width, float height)
@@ -80,6 +90,11 @@ namespace Game.ScriptableObjects.GameLogic
         public Vector2 WorldPositionToGridXY(Vector3 worldPosition)
         {
             return _pathFinding.Grid.WorldPositionToGridXY(worldPosition);
+        }
+
+        public Vector3 GridXYToWorldPosition(int x, int y)
+        {
+            return _pathFinding.Grid.GetWorldPosition(x, y);
         }
 
         public bool IsWalkable(Vector3 worldPosition)

@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using Channels;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Utils;
 
 namespace Levels
 {
     public class LevelManager : MonoBehaviour
     {
-        [SerializeField] private LevelChannel levelChannel;
+        [SerializeField] private LevelChannel _levelChannel;
         [SerializeField] private GameChannel _gameChannel;
         
         [SerializeField] private List<LevelData> _allLevelsData;
-        
+
         private Level _activeLevel;
         private int _activeLevelIndex;
         
-        private void Awake()
+        private void Start()
         {
             _activeLevelIndex = -1;
             IncreaseLevel();
@@ -38,20 +38,24 @@ namespace Levels
 
         private void WinGame()
         {
-            // TODO : Win!
+            print("You won the game!");
         }
 
         private void GoToNextLevel()
         {
-            _activeLevel = new Level(_allLevelsData[_activeLevelIndex], levelChannel, _gameChannel);
+            var previousLevel = _activeLevel;
+            _activeLevel = new Level(_allLevelsData[_activeLevelIndex], _levelChannel, _gameChannel);
             _activeLevel.levelCompletedEvent += ActiveLevelCompletedEvent;
+
+            transform.localScale = _activeLevel.Data.GameZoneSize.To3D();
+            
+            _levelChannel.OnLevelChanged(previousLevel, _activeLevel);
         }
 
         private void ActiveLevelCompletedEvent(Level completedLevel)
         {
             completedLevel.levelCompletedEvent -= ActiveLevelCompletedEvent;
             print("The Active level has been completed");
-
             
             IncreaseLevel();
         }

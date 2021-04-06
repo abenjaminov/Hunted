@@ -12,7 +12,7 @@ namespace Grid
     public class GridTest : MonoBehaviour, IGridVisuals<PathNode>
     {
         public PathFindingData pathFindingData;
-        
+
         private void Start()
         {
             pathFindingData.SetVisuals(this);
@@ -38,7 +38,7 @@ namespace Grid
                     gridToDraw.GetWorldPosition(i, gridToDraw.Height) - halfCellSize,
                     Color.white,100f);
             }
-
+            
             for (int i = 0; i <= gridToDraw.Height; i++)
             {
                 Debug.DrawLine(gridToDraw.GetWorldPosition(0, i) - halfCellSize, 

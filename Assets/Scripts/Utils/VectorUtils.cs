@@ -19,6 +19,11 @@ namespace Utils
             return new Vector2(me.x, me.y);
         }
         
+        public static Vector3Int To3D(this Vector2Int me)
+        {
+            return new Vector3Int(me.x, me.y,0);
+        }
+        
         public static Vector3 To3D(this Vector2 me)
         {
             return new Vector3(me.x, me.y,0);

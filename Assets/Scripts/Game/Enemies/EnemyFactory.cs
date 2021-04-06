@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Channels;
+using Game.ScriptableObjects.GameLogic;
+using Levels;
 using Snake;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,16 +13,43 @@ namespace Game.Enemies
 {
     public class EnemyFactory : MonoBehaviour
     {
+        [SerializeField] private LevelChannel _levelChannel;
         [SerializeField] private GameObject _enemyPrefab;
         [SerializeField] private List<Transform> _spawnLocations;
-
+        [SerializeField] private PathFindingData _pathFindingData;
         [SerializeField] private float _timeBetweenSpawns;
         private float _timeToNextSpawn;
 
         private int enemyNumber = 1;
+        private bool IsSpawningEnemies;
+        
+        private void Start()
+        {
+            _levelChannel.levelChangedEvent += LevelChangedEvent;
+        }
+
+        private void LevelChangedEvent(Level oldLevel, Level newLevel)
+        {
+            IsSpawningEnemies = newLevel.Data.SpawnEnemies;
+            _pathFindingData.InitializePathFinding(newLevel.Data.GameZoneSize.x,newLevel.Data.GameZoneSize.y);
+
+            var spawnCircleRadius = Mathf.Min(newLevel.Data.GameZoneSize.x / 2, newLevel.Data.GameZoneSize.y / 2) * 0.9f;
+            var angleBetweenSpawnLocations = (360f / _spawnLocations.Count) * Mathf.Deg2Rad;
+            
+            for (int i = 0; i < _spawnLocations.Count; i++)
+            {
+                var currentAngle = angleBetweenSpawnLocations * i;
+                var xDistance = Mathf.Cos(currentAngle) * spawnCircleRadius;
+                var yDistance = Mathf.Sin(currentAngle) * spawnCircleRadius;
+            
+                _spawnLocations[i].transform.position = new Vector3(xDistance, yDistance, 0);
+            }
+        }
 
         private void Update()
         {
+            if (!IsSpawningEnemies) return;
+            
             _timeToNextSpawn -= Time.deltaTime;
             
             if (_timeToNextSpawn <= 0)
@@ -39,9 +70,9 @@ namespace Game.Enemies
             enemyNumber++;
             
             EnemyAI enemyAI = newEnemy.GetComponent<EnemyAI>();
-
-            var followObject = this.GetRandomSnakeBodyPart();
+            enemyAI.SetPathFindingData(_pathFindingData);
             
+            var followObject = this.GetRandomSnakeBodyPart();
             enemyAI.FollowObject(followObject.gameObject);
         }
 

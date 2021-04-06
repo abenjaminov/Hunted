@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Game;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Levels
 {
@@ -10,6 +10,20 @@ namespace Levels
     public class LevelData : ScriptableObject
     {
         public string name;
+        [TextArea] public string description;
+        public Vector2Int GameZoneSize;
+        public LevelData NextLevel;
         public List<LevelObjectiveData> objectivesData;
+        
+        [Header("Enemies")]
+        public bool SpawnEnemies;
+        
+        [Header("Power ups")]
+        public bool SpawnPowerups;
+        public List<GameObject> PowerupPrefabs;
+
+        [Header("Obstacles")] 
+        public List<Obstacle> _obstaclePrefabs;
+
     }
 }

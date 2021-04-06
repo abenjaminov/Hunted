@@ -4,6 +4,7 @@ using Channels;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.GameLogic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Game.Enemies
@@ -11,7 +12,7 @@ namespace Game.Enemies
     public class EnemyAI : MonoBehaviour
     {
         [SerializeField] private MovementChannel _movementChannel;
-        [SerializeField] private PathFindingData pathFindingData;
+        private PathFindingData _pathFindingData;
 
         private GameObject _objectToFollow;
         [SerializeField] private float timeBetweenPulses;
@@ -31,6 +32,11 @@ namespace Game.Enemies
             _movementChannel.movementDirectionEvent += MovementDirectionEvent;
         }
 
+        public void SetPathFindingData(PathFindingData pathFindingData)
+        {
+            _pathFindingData = pathFindingData;
+        }
+        
         private void MovementDirectionEvent(Vector3 arg0)
         {
             _timeUntillNextPulse = timeBetweenPulses;   
@@ -66,7 +72,7 @@ namespace Game.Enemies
         {
             var followPosition = GetFinalFollowPosition();
 
-            _movementPositions = pathFindingData.FindPath(transform.position,followPosition);
+            _movementPositions = _pathFindingData.FindPath(transform.position,followPosition);
 
             SetupNextPosition();
         }
@@ -85,10 +91,10 @@ namespace Game.Enemies
             if (nextPositionIndex < 0) return;
 
             var currentEnemyGridPosition =
-                pathFindingData.WorldPositionToGridXY(transform.position);
+                _pathFindingData.WorldPositionToGridXY(transform.position);
 
             var nextPositionOnGrid =
-                pathFindingData.WorldPositionToGridXY(_movementPositions[nextPositionIndex]);
+                _pathFindingData.WorldPositionToGridXY(_movementPositions[nextPositionIndex]);
 
             if (currentEnemyGridPosition == nextPositionOnGrid)
             {
