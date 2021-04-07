@@ -57,6 +57,8 @@ namespace Grid
 
         public T GetGridObjectAt(int x, int y)
         {
+            if (y < 0 || y >= Height || x < 0 || x >= Width) return null;
+            
             return _grid[y, x];
         }
 

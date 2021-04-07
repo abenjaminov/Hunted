@@ -1,20 +1,16 @@
+using System;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.GameLogic;
 using UnityEngine;
 
 namespace Game
 {
-    public class Obstacle : MonoBehaviour
+    [Serializable]
+    public class Obstacle
     {
-        [SerializeField] private PathFindingData _pathFindingData;
-
-        private SpriteRenderer _renderer;
-        
-        void Start()
-        {
-            _renderer = GetComponent<SpriteRenderer>();
-            var bounds = _renderer.bounds;
-            _pathFindingData.SetNonWalkableArea(bounds.center, bounds.size.x, bounds.size.y);        
-        }
+        public Sprite Sprite;
+        public Vector2 Position;
+        public int Width;
+        public int Height;
     }
 }

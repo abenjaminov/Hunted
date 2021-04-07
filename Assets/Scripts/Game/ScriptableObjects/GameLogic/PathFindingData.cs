@@ -13,7 +13,7 @@ namespace Game.ScriptableObjects.GameLogic
 
         [HideInInspector] public int Width;
         [HideInInspector] public int Height;
-        [HideInInspector]  private Vector2 Position;
+        private Vector2 Position;
         
         [SerializeField] private float CellSize;
         private IGridVisuals<PathNode> _gridVisuals;
@@ -35,23 +35,24 @@ namespace Game.ScriptableObjects.GameLogic
             _gridVisuals = gridVisuals;
         }
         
-        public void SetNonWalkableArea(Vector3 centerWorldPosition, float width, float height)
+        public void SetNonWalkableArea(Vector3 worldPosition, float width, float height)
         {
-            var xIndex = 0;
+            var xIndex = -1;
             int yIndex;
             var xProgress = xIndex * CellSize;
             float yProgress;
 
-            var worldPosition = centerWorldPosition - new Vector3(width / 2, height / 2);
-
-            while (xProgress <= width + CellSize)
+            while (xProgress <= width)
             {
-                yIndex = 0;
+                yIndex = -1;
                 yProgress = yIndex * CellSize;
-                while (yProgress <= height + CellSize)
+                while (yProgress <= height)
                 {
                     var gridPosition = _pathFinding.Grid.WorldPositionToGridXY(worldPosition + new Vector3(xProgress, yProgress,0));
                     var currentNode = _pathFinding.Grid.GetGridObjectAt(gridPosition.x, gridPosition.y);
+                    
+                    if (currentNode == null) continue;
+                    
                     currentNode.SetIsWalkable(false);
                     yIndex++;
                     yProgress = yIndex * CellSize;

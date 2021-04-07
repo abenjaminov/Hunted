@@ -13,11 +13,27 @@ MonoBehaviour:
   m_Name: Level 2 Data
   m_EditorClassIdentifier: 
   name: Level 2
-  GameZoneSize: {x: 0, y: 0}
-  SpawnEnemies: 0
-  SpawnPowerups: 0
-  PowerupPrefabs: []
+  description: 
+  GameZoneSize: {x: 60, y: 40}
   NextLevel: {fileID: 0}
   objectivesData:
   - {fileID: 11400000, guid: dffc7cf2891b0ac4cbfa7cf47b987b80, type: 2}
   - {fileID: 11400000, guid: a40201eb8d588d14490427e21605c856, type: 2}
+  SpawnEnemies: 1
+  SpawnPowerups: 1
+  PowerupPrefabs:
+  - {fileID: 341903973668170503, guid: 1f4264768ddc379458ef1ad05955f22b, type: 3}
+  ObstacleFactory: {fileID: 11400000, guid: 7c7ad4338dc2fd54fba6e454d4cffd0b, type: 2}
+  Obstacles:
+  - Sprite: {fileID: 7482667652216324306, guid: 6ac0ff17f6a62b4448947fbf59c58953, type: 3}
+    Position: {x: -7, y: 5}
+    Width: 12
+    Height: 1
+  - Sprite: {fileID: 7482667652216324306, guid: 6ac0ff17f6a62b4448947fbf59c58953, type: 3}
+    Position: {x: 5, y: 3}
+    Width: 1
+    Height: 3
+  - Sprite: {fileID: 7482667652216324306, guid: 6ac0ff17f6a62b4448947fbf59c58953, type: 3}
+    Position: {x: -10, y: 6}
+    Width: 5
+    Height: 2

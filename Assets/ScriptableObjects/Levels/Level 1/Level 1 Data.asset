@@ -23,3 +23,9 @@ MonoBehaviour:
   SpawnPowerups: 1
   PowerupPrefabs:
   - {fileID: 341903973668170503, guid: 1f4264768ddc379458ef1ad05955f22b, type: 3}
+  ObstacleFactory: {fileID: 11400000, guid: 7c7ad4338dc2fd54fba6e454d4cffd0b, type: 2}
+  Obstacles:
+  - Sprite: {fileID: 7482667652216324306, guid: 6ac0ff17f6a62b4448947fbf59c58953, type: 3}
+    Position: {x: 2, y: 2}
+    Width: 2
+    Height: 6

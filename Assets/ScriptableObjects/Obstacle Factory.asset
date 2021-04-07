@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6490697f5240f98b5675894954a2cb, type: 3}
+  m_Name: Obstacle Factory
+  m_EditorClassIdentifier: 
+  _sortingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _pathFindingData: {fileID: 11400000, guid: 210e9c93f6cb5ca4ca241b3f7f1f561a, type: 2}
+  _levelChannel: {fileID: 11400000, guid: ffc8a0b5cdb67594f91cce544f074ee4, type: 2}

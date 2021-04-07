@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _playerTransform;
 
-    // Update is called once per frame
     void Update()
     {
         var camTransform = transform;

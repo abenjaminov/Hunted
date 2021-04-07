@@ -23,7 +23,7 @@ namespace Levels
         public List<GameObject> PowerupPrefabs;
 
         [Header("Obstacles")] 
-        public List<Obstacle> _obstaclePrefabs;
-
+        public ObstacleFactory ObstacleFactory;
+        public List<Obstacle> Obstacles;
     }
 }

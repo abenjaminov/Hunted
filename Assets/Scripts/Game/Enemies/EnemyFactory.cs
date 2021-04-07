@@ -23,7 +23,7 @@ namespace Game.Enemies
         private int enemyNumber = 1;
         private bool IsSpawningEnemies;
         
-        private void Start()
+        private void Awake()
         {
             _levelChannel.levelChangedEvent += LevelChangedEvent;
         }
@@ -31,7 +31,6 @@ namespace Game.Enemies
         private void LevelChangedEvent(Level oldLevel, Level newLevel)
         {
             IsSpawningEnemies = newLevel.Data.SpawnEnemies;
-            _pathFindingData.InitializePathFinding(newLevel.Data.GameZoneSize.x,newLevel.Data.GameZoneSize.y);
 
             var spawnCircleRadius = Mathf.Min(newLevel.Data.GameZoneSize.x / 2, newLevel.Data.GameZoneSize.y / 2) * 0.9f;
             var angleBetweenSpawnLocations = (360f / _spawnLocations.Count) * Mathf.Deg2Rad;
