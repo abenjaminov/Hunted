@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Channels;
 using Game.ScriptableObjects;
@@ -70,11 +71,18 @@ namespace Game.Enemies
 
         private void CreatePath()
         {
+            StartCoroutine(CreatePath_CR());
+        }
+
+        private IEnumerator CreatePath_CR()
+        {
             var followPosition = GetFinalFollowPosition();
 
             _movementPositions = _pathFindingData.FindPath(transform.position,followPosition);
 
             SetupNextPosition();
+            
+            yield return null;
         }
 
         private Vector2 GetFinalFollowPosition()

@@ -48,14 +48,20 @@ namespace Levels
             _activeLevel.levelCompletedEvent += ActiveLevelCompletedEvent;
 
             transform.localScale = _activeLevel.Data.GameZoneSize.To3D();
-            
-            _levelChannel.OnLevelChanged(previousLevel, _activeLevel);
+
+            if (_activeLevelIndex == 0)
+            {
+                _levelChannel.OnLevelChanging(null, _activeLevel);                
+            }
+            else
+            {
+                _levelChannel.OnLevelCompleted(previousLevel, _activeLevel);    
+            }
         }
 
         private void ActiveLevelCompletedEvent(Level completedLevel)
         {
             completedLevel.levelCompletedEvent -= ActiveLevelCompletedEvent;
-            print("The Active level has been completed");
             
             IncreaseLevel();
         }

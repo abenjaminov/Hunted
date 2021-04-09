@@ -1,11 +1,13 @@
 using Channels;
 using Game.ScriptableObjects;
+using Levels;
 using UnityEngine;
 
 namespace Game.Enemies
 {
     public class Enemy : MonoBehaviour
     {
+        [SerializeField] private LevelChannel _levelChannel;
         [SerializeField] private GameChannel _gameChannel;
         [SerializeField] private EnemyData _enemyData;
 
@@ -15,8 +17,14 @@ namespace Game.Enemies
 
         private void Awake()
         {
-            this._currentHealth = _enemyData.Health;
+            _currentHealth = _enemyData.Health;
             _enemyCollider2D = GetComponent<Collider2D>();
+            _levelChannel.levelCompletedEvent += LevelCompletedEvent;
+        }
+
+        private void LevelCompletedEvent(Level arg0, Level arg1)
+        {
+            Die();
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -26,11 +34,11 @@ namespace Game.Enemies
 
             if (other.TryGetComponent(typeof(Shot), out shot))
             {
-                this._currentHealth -= 50;
+                _currentHealth -= 50;
 
-                if (this._currentHealth <= 0)
+                if (_currentHealth <= 0)
                 {
-                    this.Die();
+                    Die();
                 }
                 
                 Destroy(shot.gameObject);

@@ -62,7 +62,7 @@ namespace Game.ScriptableObjects.GameLogic
                 xProgress = xIndex * CellSize;
             }
         }
-        
+
         public List<Vector2> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition)
         {
             var nodes = _pathFinding.FindPath(startWorldPosition, endWorldPosition);

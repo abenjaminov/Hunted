@@ -45,7 +45,6 @@ namespace Levels
         private void CompleteLevel()
         {
             OnLevelCompleted();
-            _levelChannel.OnLevelCompleted(this);
         }
         
         private void OnLevelCompleted() 

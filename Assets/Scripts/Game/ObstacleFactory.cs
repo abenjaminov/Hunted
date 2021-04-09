@@ -24,7 +24,8 @@ namespace Game
             if (singleFactory == null)
             {
                 singleFactory = this;
-                _levelChannel.levelChangedEvent += LevelChangedEvent;
+                _levelChannel.levelCompletedEvent += LevelCompletedEvent;
+                _levelChannel.levelChangingEvent += LevelChangingEvent;
             }
             else
             {
@@ -32,14 +33,17 @@ namespace Game
             }
         }
 
-        private void LevelChangedEvent(Level oldLevel, Level newLevel)
+        private void LevelCompletedEvent(Level oldLevel, Level newLevel)
         {
-            _pathFindingData.InitializePathFinding(newLevel.Data.GameZoneSize.x,newLevel.Data.GameZoneSize.y);
-            
             for (int i = 0; i < _allObstacles.Count; i++)
             {
                 Destroy(_allObstacles[i]);
             }
+        }
+
+        private void LevelChangingEvent(Level oldLevel, Level newLevel)
+        {
+            _pathFindingData.InitializePathFinding(newLevel.Data.GameZoneSize.x,newLevel.Data.GameZoneSize.y);
 
             foreach (var obstacle in newLevel.Data.Obstacles)
             {

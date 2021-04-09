@@ -22,13 +22,19 @@ namespace Game.Enemies
 
         private int enemyNumber = 1;
         private bool IsSpawningEnemies;
-        
+
         private void Awake()
         {
-            _levelChannel.levelChangedEvent += LevelChangedEvent;
+            _levelChannel.levelChangingEvent += LevelChangedingEvent;
+            _levelChannel.levelCompletedEvent += LevelCompletedEvent;
         }
 
-        private void LevelChangedEvent(Level oldLevel, Level newLevel)
+        private void LevelCompletedEvent(Level arg0, Level arg1)
+        {
+            IsSpawningEnemies = false;
+        }
+
+        private void LevelChangedingEvent(Level oldLevel, Level newLevel)
         {
             IsSpawningEnemies = newLevel.Data.SpawnEnemies;
 

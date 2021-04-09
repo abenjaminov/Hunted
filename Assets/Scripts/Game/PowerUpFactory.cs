@@ -23,6 +23,7 @@ namespace Game
         private float _timeToNextSpawnAfterFailed = .075f;
 
         private bool IsSpawningPowerups;
+        private List<Collectable> _allPowerups;
         
         private void Awake()
         {
@@ -34,7 +35,8 @@ namespace Game
 
         private void Start()
         {
-            _levelChannel.levelChangedEvent += LevelChangedEvent;
+            _levelChannel.levelChangingEvent += LevelChangedEvent;
+            _levelChannel.levelCompletedEvent += LevelCompletedEvent;
         }
 
         private void Update()
@@ -47,6 +49,11 @@ namespace Game
             {
                 TrySpawnCollectable();
             }
+        }
+        
+        private void LevelCompletedEvent(Level arg0, Level arg1)
+        {
+            IsSpawningPowerups = false;
         }
         
         private void LevelChangedEvent(Level oldLevel, Level newLevel)

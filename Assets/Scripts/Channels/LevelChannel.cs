@@ -7,13 +7,13 @@ namespace Channels
     [CreateAssetMenu(fileName = "LevelChannel", menuName = "Channels/Level Channel", order = 0)]
     public class LevelChannel : ScriptableObject
     {
-        public UnityAction<Level> levelCompleteEvent;
+        public UnityAction<Level, Level> levelCompletedEvent;
         public UnityAction<LevelObjective> levelObjectiveComplete;
-        public UnityAction<Level, Level> levelChangedEvent;
+        public UnityAction<Level, Level> levelChangingEvent;
 
-        public void OnLevelCompleted(Level level)
+        public void OnLevelCompleted(Level oldLevel, Level newLevel)
         {
-            levelCompleteEvent?.Invoke(level);
+            levelCompletedEvent?.Invoke(oldLevel, newLevel);
         }
         
         public void OnLevelObjectiveCompleted(LevelObjective levelObject)
@@ -21,9 +21,9 @@ namespace Channels
             levelObjectiveComplete?.Invoke(levelObject);
         }
 
-        public void OnLevelChanged(Level oldLevel, Level newLevel)
+        public void OnLevelChanging(Level oldLevel, Level newLevel)
         {
-            levelChangedEvent?.Invoke(oldLevel, newLevel);
+            levelChangingEvent?.Invoke(oldLevel, newLevel);
         }
     }
 }
